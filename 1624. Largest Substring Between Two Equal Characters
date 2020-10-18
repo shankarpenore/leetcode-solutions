@@ -1,0 +1,28 @@
+class Solution {
+    public int maxLengthBetweenEqualCharacters(String s) {
+        int global_max = -1;
+        for(int i = 0; i< s.length();i++)
+        {
+           
+            int local_max = -1;
+            
+            for(int j=i;j<s.length();j++)
+            {
+                
+                if(s.charAt(j)==s.charAt(i))
+                   {
+                    int distance = j-i-1;
+                    if (local_max < distance){
+                        local_max = distance;
+                    }
+                    
+                    }
+                   if(global_max < local_max){
+                       global_max = local_max;
+                   }
+            }
+        }
+                   
+        return global_max;
+    }
+}
