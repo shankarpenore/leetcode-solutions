@@ -1,0 +1,17 @@
+class Solution {
+    public double trimMean(int[] arr) {
+        
+        Arrays.sort(arr);
+        int start_index = (int)(arr.length * 0.05); // no sof elements to trim from left and right as we as it iwll be start_index      
+        int end_index = arr.length-start_index-1;
+        System.out.println(arr[end_index]);
+        double result = 0;
+        for(int i = start_index; i<= end_index; i++)
+        {
+            result = result + arr[i];
+        }
+        
+        result = result / (end_index-start_index+1);
+        return result;
+    }
+}
