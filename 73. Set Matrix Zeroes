@@ -1,0 +1,80 @@
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        
+        if(matrix.length == 1)
+        {
+            if(matrix[0][0] == 0)
+                matrix[0][0] = 0;
+        }
+        
+        boolean rowHasZero = false;
+        boolean colHasZero = false;
+        
+        for(int i = 0 ; i<matrix[0].length; i++){
+            if(matrix[0][i] == 0)
+            {
+                rowHasZero =  true;
+                break;
+            }
+        }
+        
+        for(int i = 0; i<matrix.length; i++){
+            if(matrix[i][0] == 0)
+            {
+                colHasZero =  true;
+                break;
+            }
+        }
+        
+        for(int i =0 ; i<matrix.length; i++)
+        {
+            for(int j  =0 ; j<matrix[0].length; j++){
+                
+                if( matrix[i][j] == 0)
+                {
+                  matrix[i][0] = 0;
+                  matrix[0][j] = 0;
+                }
+            }
+        }
+        
+//         nullify rows
+        for(int i = 1; i < matrix.length; i++){
+            if(matrix[i][0] == 0)
+            nullifyRow(matrix, i);
+        }
+//        nullify-columns
+        for(int i = 1; i < matrix[0].length; i++){
+            if(matrix[0][i] == 0){
+            nullifyCol(matrix, i);
+            }
+        }
+        
+//       nullify first row if has atleast one zero
+        if(rowHasZero){
+            for(int i = 0 ; i<matrix[0].length; i++){
+                matrix[0][i] = 0;
+            }    
+        }
+//        nullify first col if has atleast one zero
+        if(colHasZero){
+            for(int i = 0 ; i<matrix.length; i++){
+                matrix[i][0] = 0;
+            }
+            
+        }
+        
+    }
+    
+    public void nullifyRow(int [][] matrix, int i){
+        for(int j=0; j<matrix[0].length; j++){
+            matrix[i][j] = 0;
+        }
+    }
+    
+    public void nullifyCol(int [][] matrix, int i){
+        for(int j=0; j<matrix.length; j++){
+            matrix[j][i] = 0;
+        }       
+    }
+}
