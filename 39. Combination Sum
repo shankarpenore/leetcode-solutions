@@ -1,0 +1,32 @@
+class Solution {
+	// lets not worry about final solution which will be the list of all valid combinations 
+	// in this fuction, we will create empty list and pass this reference to our recursive method
+	// which will add valid combinations to list
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
+        List<List<Integer>> result = new ArrayList();
+        backTrack(candidates,result,new ArrayList(), target,0);
+        return result;
+    }
+    
+    public void backTrack(int []candidates,List<List<Integer>>cur_solution, List<Integer>cur_combination, int target, int cur_element)
+    {
+     // suppose at any point we have a current ongoing combination   'cur_combination'
+	 // target we are looking for 'target'
+        if(target == 0)  //if target is 0 that means our current combination has perfect sum so add it to list
+            cur_solution.add(new ArrayList(cur_combination));
+        if(target < 0)  //if target is small that means our current combination has sum over the limit
+            return;
+        
+		//we have some combination which is not valid yet and it's sum is lesser than what we want
+		// then we will lopp through candidates where we left off last time
+        for(int i=cur_element; i<candidates.length; i++){
+            cur_combination.add(candidates[i]);
+			// we will try adding that number or candidate to our current combination
+            backTrack(candidates, cur_solution, cur_combination, target-candidates[i],i);
+			// we will remove that no and try adding next number...next iteration
+            cur_combination.remove(cur_combination.size()-1);
+        }
+        
+    }
+}
