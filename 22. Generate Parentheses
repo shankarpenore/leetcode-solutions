@@ -1,0 +1,51 @@
+class Solution {
+
+    public List<String> generateParenthesis(int n) {
+
+        List<String> result = new ArrayList();
+        generateAll(result,"",0,0,n);
+        return result;
+    }
+    public void generateAll(List<String> result, 
+                            String curr_string, 
+                            int open, 
+                            int close, 
+                            int limit)
+    {
+        
+        if(curr_string.length() == 2*limit){
+            result.add(curr_string);
+            return;
+        }
+        
+        if(open < limit){
+            generateAll(result,curr_string+"(",open+1,close,limit);
+        }
+        
+        if(close < open){
+            generateAll(result,curr_string+")",open,close+1,limit);
+        }
+        
+    }
+}
+
+// class Solution {
+//     public List<String> generateParenthesis(int n) {
+//         List<String> ans = new ArrayList();
+//         backtrack(ans, "", 0, 0, n);
+//         ans.forEach(System.out::println);
+//         return ans;
+//     }
+
+//     public void backtrack(List<String> ans, String cur, int open, int close, int max){
+//         if (cur.length() == max * 2) {
+//             ans.add(cur);
+//             return;
+//         }
+
+//         if (open < max)
+//             backtrack(ans, cur+"(", open+1, close, max);
+//         if (close < open)
+//             backtrack(ans, cur+")", open, close+1, max);
+//     }
+// }
