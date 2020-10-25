@@ -1,0 +1,64 @@
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        
+        Arrays.sort(nums);
+        List <List<Integer>> result = new ArrayList<>();
+        int third = 0;
+        int fourth = 0;
+        int i=0;
+        int j=0;
+        
+        for(i=0;i<nums.length;)
+        {
+            for(j=i+1;j<nums.length;){
+                
+                third = j+1;
+                fourth = nums.length-1;
+                while(third<fourth){
+                    int sum = nums[i]+nums[j]+nums[third]+nums[fourth];
+                    if(sum == target){
+                        
+                        List<Integer> quadraplet = new ArrayList();
+                        quadraplet.add(nums[i]);
+                        quadraplet.add(nums[j]);
+                        quadraplet.add(nums[third]);
+                        quadraplet.add(nums[fourth]);
+                        result.add(quadraplet);
+                        
+                        int prevThird = nums[third];
+                        int prevFourth = nums[fourth];
+                        
+                        while(third < fourth && prevThird == nums[third])
+                        {
+                            third++;
+                        }
+                        
+                        while(fourth > third && prevFourth == nums[fourth])
+                        {
+                            fourth--;
+                        }
+                        
+                    }else if(sum<target){
+                        third += 1;
+                    }else{
+                        fourth -= 1;
+                    }
+                }
+                
+                int prevSecond = nums[j];
+                while(j < third && prevSecond == nums[j])
+                {
+                    j++;
+                }
+            }
+            
+            int prevFirst = nums[i];
+            while(i<j && prevFirst == nums[i]){
+                i++;
+            }
+        }
+        
+        return result;
+
+    }
+}
