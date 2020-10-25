@@ -1,0 +1,44 @@
+class Solution {
+    public int[] deckRevealedIncreasing(int[] deck) {
+        Arrays.sort(deck);
+        int ans[] = new int[deck.length];
+        for(int i=0; i< ans.length;i++){
+            ans[i] = 0;
+        }
+        int deck_i = 0;
+        for(int i=0; deck_i < deck.length;){
+            if(ans[i] == 0){
+                ans[i] = deck[deck_i++];
+            }
+            
+            int tmp = getNextPos(ans, i%ans.length);
+            tmp = getNextPos(ans, (tmp+1)%ans.length);
+            if(tmp == -1)break;
+            i = tmp;
+            if(i == ans.length){
+                i = 0;
+            }
+        }
+        return ans;
+    }
+    
+    public int getNextPos(int []ans, int start)
+    {
+        for(int i = start; i<ans.length;i++){
+            if(ans[i] == 0)
+            {
+                return i;
+            }
+        }
+        
+        start = 0;
+        for(int i = 0 ; i<ans.length;i++)
+        {
+                        if(ans[i] == 0)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
