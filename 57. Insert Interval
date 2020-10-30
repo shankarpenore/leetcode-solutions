@@ -1,0 +1,37 @@
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        
+        ArrayList <int[]> res = new ArrayList(); 
+        int i =0;
+        
+     // copy the all left non ovelapping intervals to result
+//      this loop will break if there is operlapping between current interval and our newInterval.
+        while(i < intervals.length){
+            if(intervals[i][1] < newInterval[0])
+                res.add(intervals[i++]);
+            else
+                break;
+        }
+        
+//      as long as newInterval overlap merge all the intervals into single one and store it back in new Interval   
+        while(i < intervals.length){
+            
+            if(intervals[i][0] <= newInterval[1]){
+                newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
+                newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
+                i++;
+            }
+            else
+                break;
+        }
+        
+//      add this new interval which we have build in previous while loop.
+        res.add(newInterval);
+//      where there is no overlapping anymore add all the right intervals left in list    
+        while(i < intervals.length){
+            res.add(intervals[i]);
+            i++;
+        }
+        return res.toArray(new int [res.size()][2] );
+    }
+}
