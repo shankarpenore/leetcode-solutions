@@ -1,0 +1,39 @@
+
+class Solution {
+    public int[] findMode(TreeNode root) {
+
+         
+        if(root == null) return new int[0];
+        
+        HashMap <Integer,Integer>map = new HashMap();
+        HashSet <Integer> s = new HashSet();
+        Integer max = Integer.MIN_VALUE;
+
+        find(map,root);
+        for(Map.Entry<Integer, Integer> entry: map.entrySet()){
+            if(entry.getValue() > max){
+                s.clear();
+                s.add(entry.getKey());
+                max = entry.getValue();
+            }else if(entry.getValue() == max){
+                s.add(entry.getKey());
+            }
+        }
+        
+        int []ans = new int[s.size()];
+        Iterator <Integer>iter = s.iterator();
+        int i = 0;
+        while(iter.hasNext()){
+            ans[i++] = iter.next();
+        }
+        
+       return ans;
+    }
+    
+    public void find(HashMap<Integer,Integer> map, TreeNode root){
+        if(root == null) return;
+        map.put(root.val, 1+map.getOrDefault(root.val,0));
+        if(root.left != null) find(map,root.left);
+        if(root.right != null ) find(map,root.right);
+    }
+}
