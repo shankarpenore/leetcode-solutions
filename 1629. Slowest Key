@@ -1,0 +1,24 @@
+class Solution {
+    public char slowestKey(int[] releaseTimes, String keysPressed) {
+        
+        int maxDuration = releaseTimes[0];
+        char pressedKey = keysPressed.charAt(0);
+        int duration = 0 ;
+        
+        for(int i=1;i< releaseTimes.length; i++){
+            
+            duration = releaseTimes[i]-releaseTimes[i-1];
+            
+            if(duration > maxDuration){
+                
+                maxDuration = duration;
+                pressedKey = keysPressed.charAt(i);
+            }
+            else if(duration == maxDuration){
+                
+                pressedKey = pressedKey > keysPressed.charAt(i) ? pressedKey : keysPressed.charAt(i);
+            }
+        }
+        return pressedKey;
+    }
+}
