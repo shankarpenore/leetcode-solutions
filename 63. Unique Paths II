@@ -1,0 +1,17 @@
+//     below is the backtrack method, but it will run into time limit exceeded
+    
+//     public void backtrack(int [][]obstacleGrid, int row, int col){
+        
+// //      if we are outside of grid
+//         if(row >= obstacleGrid.length || row < 0 || col >=obstacleGrid[0].length || col < 0) return;
+            
+// //      if we are on obstacle, that is wrong return
+//         if(obstacleGrid[row][col] == 1) return;
+// //      if we are at finish point
+//         if(row == obstacleGrid.length-1  && col == obstacleGrid[0].length-1) totalways++;
+        
+// //      go right if possible
+//         backtrack(obstacleGrid, row, col+1);
+// //      go left if possible
+//         backtrack(obstacleGrid, row+1, col);
+//     }
