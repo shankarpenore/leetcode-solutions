@@ -1,0 +1,30 @@
+class Solution {
+    
+    private class largestNumber implements Comparator<String>{
+        @Override
+        public int compare(String a, String b){
+            String one = a + b;
+            String two = b + a;
+            return two.compareTo(one);
+        }
+        
+    }
+    public String largestNumber(int[] nums) {
+        
+        String[] strrep = new String[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            strrep[i] = String.valueOf(nums[i]);
+        }
+        
+        Arrays.sort(strrep, new largestNumber());
+        
+        if(strrep[0].equals("0")) return "0";
+        
+        String largest = new String();
+        for(String each:strrep){
+            largest += each;
+        }
+        
+        return largest;
+    }
+}
