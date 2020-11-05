@@ -1,0 +1,62 @@
+class Solution {
+    
+    List<List<Integer>>  res = new ArrayList();
+    public List<List<Integer>> combine(int n, int k) {
+        
+        if(k > n || n <=0 || k <=0) return res;
+        backtrack(1, new ArrayList<Integer>() , n, k);
+        return res;
+     }
+    
+    
+    public void backtrack( int cur, List<Integer> combination, int n , int k){
+        
+        if(k == 0){
+            res.add(new ArrayList<Integer>(combination));
+            return;
+        }
+        
+        for(int i = cur; i <=n ; i++){
+                combination.add(i);
+                backtrack(i+1,combination,n,k-1);
+                combination.remove(combination.size()-1);
+        }
+    }
+
+    
+            // boolean []used = new boolean[n];
+        // int nums[] = new int[n];
+        
+        // [1,2,3,4]
+        // for(int i =0; i <n;i++){
+        //     nums[i] = i+1;
+        //     used[i] = false;
+        // }
+        
+        // backtrack(0, new ArrayList<Integer>() , used, nums, k);
+    
+    
+//     public void backtrack( int cur, List<Integer> combination, boolean []used, int []nums , int k){
+        
+//         if(cur >= nums.length){
+//             return;
+//         }
+        
+//         if(combination.size() == k){
+//             res.add(new ArrayList<Integer>(combination));
+//             return;
+//         }
+        
+//         for(int i = cur; i < nums.length ; i++){
+//             if(!used[i]){
+//                 combination.add(nums[i]);
+//                 used[i] = true;
+//                 backtrack(cur+1,combination,used,nums,k);
+//                 used[i] = false;
+//                 combination.remove(combination.size()-1);
+                
+//             }
+//         }
+//     }
+
+}
