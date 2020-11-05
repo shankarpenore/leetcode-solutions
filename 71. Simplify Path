@@ -1,0 +1,67 @@
+
+class Solution {
+    public String simplifyPath(String path) {
+        
+        if(path.equals(""))
+            return path;
+        
+        Stack <String> s = new Stack();
+        // s.push("/");
+        
+        int start = 0;
+//      escape all the forward slashes from begining.
+        while(start < path.length() && path.charAt(start) == '/'){
+            start++;
+        }
+        
+//      if no word is there after slashes
+        if(path.substring(start).equals("")) return "/";
+        
+//      set end to this first alphabet..our string stars here.
+        int end = start;
+        while(start < path.length() && end < path.length()){
+            
+//          go to the first slash after word
+            while(end < path.length() && path.charAt(end) != '/'){
+                end++;                
+            }
+//          get this word saved.
+           String word = path.substring(start,end);
+//          if the word is .. then pop one element
+            if(word.equals("..")){
+                if(!s.empty()){
+                    s.pop();
+                }
+            }else if(word.equals("."))
+            {
+                //nothing
+            }else{
+            s.push(word);
+            }
+//          go to start of next word
+            while(end < path.length() && path.charAt(end) == '/'){
+                end ++;
+            }
+//          set start pointer 
+            start = end;
+        }
+      
+//      we have solution string in stack now
+        StringBuilder ans = new StringBuilder();
+        
+//       build strin from stack
+        while(!s.empty()){
+            // System.out.println(s.pop());
+            ans.insert(0,s.pop());
+            ans.insert(0,"/");
+        }
+        
+//      if string built from stack is empty
+        if(ans.length() == 0)
+            return "/";
+//      otherwise return ans string.
+        return ans.toString();
+        
+        
+    }
+}
