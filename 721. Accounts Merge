@@ -1,0 +1,61 @@
+class Solution {
+    
+    
+    List<List<String>> res = new ArrayList();
+    
+    public List<List<String>> accountsMerge(List<List<String>> accounts) {
+        
+         
+        HashMap<String,HashSet<String>> graph = new HashMap();
+        HashMap<String,String> name = new HashMap();
+        
+//      build graph   
+        for(List<String> account : accounts){
+            
+            String uname = account.get(0);
+            
+            for(int i = 1; i < account.size(); i++){
+                
+                if(!graph.containsKey(account.get(i))){
+                    graph.put(account.get(i), new HashSet());
+                }
+                
+                name.put(account.get(i), uname);
+                if(i == 1) continue;
+                
+                graph.get(account.get(i)).add(account.get(i-1));
+                graph.get(account.get(i-1)).add(account.get(i));
+                 
+            }
+        
+        }
+        
+        Set <String> visited = new HashSet();
+        
+        for(String email : name.keySet()){
+            
+            List <String>userEmails = new ArrayList();
+            
+            if(visited.add(email)){
+                dfs(userEmails, visited, email, graph);
+                Collections.sort(userEmails);
+                userEmails.add(0, name.get(email));
+                res.add(userEmails);
+            }
+        }
+        
+        return res;
+    }
+        public void dfs(List<String> userEmails, Set<String> visited, String email,  HashMap<String,HashSet<String>> graph)
+        {
+            userEmails.add(email);
+            for(String each : graph.get(email))
+            {
+                if(visited.add(each)){
+                    dfs(userEmails, visited, each, graph);
+                }
+            }
+            
+        }
+        
+}
