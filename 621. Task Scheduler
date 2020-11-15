@@ -1,0 +1,22 @@
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        
+        int taskCount[] = new int[26];
+
+        for(char each : tasks){
+            taskCount[each-'A'] += + 1;
+        }
+        
+        Arrays.sort(taskCount);
+        
+        int maxSlots = (taskCount[25]-1)*n;
+        for(int i = 24; i >= 0 ; i--){
+            maxSlots -= Math.min(taskCount[i], taskCount[25]-1);
+        }
+        
+        System.out.println(maxSlots);
+        return maxSlots > 0 ? maxSlots + tasks.length : tasks.length;
+        
+        
+    }
+}
