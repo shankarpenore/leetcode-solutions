@@ -1,0 +1,36 @@
+class Solution {
+    
+    HashSet<List<Integer>> res = new HashSet();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        generateCombinations(candidates, new ArrayList<Integer>(), 0, target, 0);
+        return new ArrayList(res);
+    }
+    
+    public void generateCombinations(int[] candidates,
+                                     ArrayList<Integer> combination, int sum, int target, int start){
+        
+        if(sum > target){
+            return;
+        }
+        
+        if(sum == target){
+            Collections.sort(combination);
+            res.add(new ArrayList<Integer>(combination));
+            return;
+        }
+        
+        for(int i = start ; i < candidates.length; i++){
+
+                combination.add(candidates[i]);
+                sum = sum + candidates[i];
+                generateCombinations(candidates, combination, sum, target, i+1);
+                sum = sum - candidates[i];
+                combination.remove(combination.size()-1);
+  
+        }
+        
+//         if(sum < target)
+//             combination.clear();
+    }
+}
