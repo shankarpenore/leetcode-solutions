@@ -1,0 +1,53 @@
+class Solution {
+    
+    List<List<String>> ans = new ArrayList<>();
+    
+    public List<List<String>> solveNQueens(int n) {
+        int board[][] = new int[n][n];
+        boolean colUsed[] = new boolean[n];
+        
+        solve(board, colUsed, new HashSet<Integer>(), new HashSet<Integer>(), 0);
+        
+        return ans;
+    }
+    
+    public void solve(int board[][], boolean colUsed[], HashSet<Integer> diagonal1, HashSet<Integer> diagonal2, int row){
+        
+        if(row == board.length){
+            logAnswer(board, board.length);
+            return;
+        }
+        
+        for(int j = 0; j < board.length; j++){
+            if( diagonal1.contains(row+j) == false && diagonal2.contains(j-row) == false && !colUsed[j]){
+                board[row][j] = 1;
+                colUsed[j] = true;
+                diagonal1.add(row+j);
+                diagonal2.add(j-row);
+                solve(board, colUsed, diagonal1, diagonal2, row+1);
+                board[row][j] = 0;
+                colUsed[j] = false;
+                diagonal1.remove(row+j);
+                diagonal2.remove(j-row);
+             } 
+        } 
+    }
+    
+    public void logAnswer(int board[][],int n){
+        List <String> tmp = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            StringBuilder row = new StringBuilder();
+            for(int j =0; j < n; j++){
+                if(board[i][j] == 1){
+                    row = row.append("Q");
+                }else{
+                    row.append(".");
+                }
+            }
+            
+            tmp.add(row.toString());
+        }
+        
+        ans.add(tmp);
+    }
+}
