@@ -1,0 +1,38 @@
+class Solution {
+    
+    class MyComparator implements Comparator<int []>{
+        // @override
+        public int compare(int[]a, int[]b){
+            if(a[0] > b[0]){
+                return 1;
+            }else if(a[0] == b[0]){
+                return 0;
+            }else{
+                return -1;
+            }
+        }    
+    }
+    
+    public int findMinArrowShots(int[][] points) {
+        if(points.length == 0 || points[0].length == 0) return 0;
+        
+        Arrays.sort(points, new MyComparator());
+
+        int [] lastPoint = points[0];
+        
+        int count = 1;
+        int last = 0;
+        
+        for(int i = 1 ; i <points.length; i++){
+            if(points[i][0] <= lastPoint[1]){
+                lastPoint[0] = Math.min(lastPoint[0], points[i][0]);
+                lastPoint[1] = Math.min(lastPoint[1], points[i][1]);
+            }else{
+                count++;
+                lastPoint = points[i];
+            }
+        }
+    
+        return count;
+    }
+}
