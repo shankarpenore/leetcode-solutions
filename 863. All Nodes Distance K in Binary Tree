@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    ArrayList <Integer>res = new ArrayList();
+    HashMap <TreeNode, TreeNode> parents = new HashMap(); ;
+    HashSet <Integer> visited = new HashSet();
+    
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+
+        buildParents(root, null);
+        
+        TreeNode poped = null;
+        Queue <TreeNode> q = new LinkedList();
+        q.offer(root);
+    
+        while(q.size() > 0){
+            poped = q.poll();
+            if(poped == target)
+                break;
+            if(poped.left != null) q.offer(poped.left);
+            if(poped.right != null) q.offer(poped.right);
+        }
+    
+        dfs(poped, target, 0,K);
+        return res;
+    }
+    
+    public void dfs(TreeNode root, TreeNode target, int curdistance, int k ){
+    
+        
+        if(root == null ||  curdistance > k || visited.contains(root.val)) return;
+        
+        if(curdistance == k){
+            res.add(root.val);
+            return;
+        }
+        
+        visited.add(root.val);
+        dfs(root.left, target, curdistance+1, k);
+        dfs(root.right, target,curdistance+1, k);
+        dfs(parents.get(root), target, curdistance+1, k);
+        
+    }
+    
+    public void buildParents(TreeNode root, TreeNode parent){
+        if(root == null) return;
+        parents.put(root, parent);
+        buildParents(root.left, root);
+        buildParents(root.right, root);
+    }
+    
+    
+}
