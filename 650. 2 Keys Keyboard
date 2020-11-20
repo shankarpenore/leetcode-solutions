@@ -1,0 +1,24 @@
+class Solution {
+    public int minSteps(int n) {
+        
+        if(n == 1) return 0;
+        
+        int totalWrittenChars = 1; // initially we have 1 char available
+        int operations = 0; 
+        int copy_count = 0; // no of char we copied last time
+        
+        while(totalWrittenChars < n){
+            if(n % totalWrittenChars == 0){ 
+                operations += 2;
+                copy_count = totalWrittenChars;
+                totalWrittenChars *= 2;
+            }else{
+                operations += 1;
+                totalWrittenChars += copy_count;
+            }
+        }
+        
+        return operations;
+        
+    }
+}
