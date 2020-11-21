@@ -1,0 +1,28 @@
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        
+        List <Integer>res = new ArrayList(); 
+        boolean visited[][] = new boolean[matrix.length][matrix[0].length];
+        
+        goSpiral(res, visited, matrix, 0 , 0 , 'r');
+        
+        return res;
+    }
+    
+    public void goSpiral(List<Integer> res, boolean visited[][], int matrix[][], int i, int j, char d){
+        
+        if(i < 0 || j <0 || i >= matrix.length || j >= matrix[0].length || visited[i][j]) return; 
+        
+        res.add(matrix[i][j]);
+        visited[i][j] = true;
+        
+        if(d == 'u'){
+            goSpiral(res, visited, matrix, i-1,j, 'u');
+        }
+        goSpiral(res, visited, matrix, i,j+1, 'r');
+        goSpiral(res, visited, matrix, i+1,j, 'd');
+        goSpiral(res, visited, matrix, i,j-1, 'l');
+        goSpiral(res, visited, matrix, i-1,j, 'u');
+    }
+}
