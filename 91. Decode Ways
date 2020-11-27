@@ -1,0 +1,39 @@
+class Solution {
+    
+    public int numDecodings(String s) {
+        
+        int dp[] = new int[s.length()+1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) == '0' ? 0 : 1;
+        
+        for(int i = 2; i <= s.length(); i++){
+            
+            int onedigit = Integer.valueOf(s.substring(i-1,i));
+            int twodigits = Integer.valueOf(s.substring(i-2, i));
+            
+            if(onedigit >=1 )
+                dp[i] += dp[i-1];
+            
+            if(twodigits < 27 && twodigits >=10)
+                dp[i] += dp[i-2];
+            
+        }
+        
+        return dp[s.length()];
+     // return s.length() == 0 ? 0 : decodeRemaining(0,s);
+    }
+    
+//     public int decodeRemaining(int cur, String s){
+
+//         if(cur == s.length()) return 1;
+        
+//         if(s.charAt(cur) == '0') return 0;
+        
+//         int res = decodeRemaining(cur+1,s);
+        
+//         if( cur < s.length()-1 && (s.charAt(cur) == '1' || s.charAt(cur) == '2' && s.charAt(cur+1) < '7'))
+//             res = res + decodeRemaining(cur+2,s);
+        
+//         return res;
+//      }
+}
