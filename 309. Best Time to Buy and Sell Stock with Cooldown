@@ -1,0 +1,48 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        
+        int n = prices.length;
+        
+        if(n < 2) return 0;
+        
+        int  []inHand = new int[n];
+        int  []sold = new int[n];
+        int  []nostock  = new int[n];
+        
+        inHand[0] = 0;
+        nostock[0] = 0;
+        inHand[0] = -prices[0];
+        
+        for(int i = 1 ; i < n; i++){
+            
+            nostock[i] = Math.max(nostock[i-1], sold[i-1]);
+            inHand[i] = Math.max(inHand[i-1], nostock[i-1]-prices[i]); 
+            sold[i] = (inHand[i-1]+prices[i]);
+            
+        }
+        
+        return Math.max(nostock[n-1], sold[n-1]);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
