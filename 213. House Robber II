@@ -1,0 +1,38 @@
+class Solution {
+    public int rob(int[] nums) {
+        
+        if(nums.length == 0)
+            return 0;
+        
+        if(nums.length < 2) 
+            return nums[0];
+        if(nums.length == 2)
+            return Math.max(nums[0], nums[1]);
+        
+        int a = helper(nums , 0 , nums.length-2);
+        int b = helper(nums , 1 , nums.length-1);
+        
+        return a > b ? a :b;
+    }
+    
+    public int helper( int nums[] , int s, int e){
+        
+        int n = e-s+1;
+        int dp[] = new int[n];
+        dp[0] = nums[s];
+        dp[1] = nums[s] > nums[s+1] ? nums[s] : nums[s+1];
+        
+        for(int i = s+2; i <= e ; i++){
+            
+            if(dp[i-s-2] + nums[i] > dp[i-s-1]){
+                dp[i-s] = dp[i-s-2] + nums[i];
+            }else{
+                dp[i-s]  = dp[i-s-1];
+            }
+        }
+        
+        return dp[dp.length-1];
+    }
+}
+
+
