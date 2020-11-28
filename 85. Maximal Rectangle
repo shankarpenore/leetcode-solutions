@@ -1,0 +1,53 @@
+class Solution {
+    public int maximalRectangle(char[][] matrix) {
+     
+        if(matrix == null || matrix.length ==  0 || matrix[0].length == 0) return 0;
+        
+        int ans = 0;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int holdrow[] = new int[matrix[0].length];
+        
+        for(int r = 0 ; r < rows ; r++){
+            
+//          generate histogram at each row
+            
+            for(int c = 0; c < cols ; c++){
+                
+                if(matrix[r][c] == '0'){
+                    holdrow[c] = 0;
+                }else{
+                    holdrow[c] = holdrow[c]+1;
+                }
+                
+            }
+
+//          calculate max rectangle in generated histogram
+            ans = Math.max(ans,maxAreaRectangle(holdrow));
+        }
+        
+        return ans;
+    }
+    
+    public int maxAreaRectangle(int [] h){
+        
+        int n = h.length;
+        int i = 0;
+        int area = 0;
+        Stack <Integer>s = new Stack<>();
+        
+        while(i < n){
+            while(!s.isEmpty() && h[s.peek()] > h[i]){
+                area = Math.max(area, h[s.pop()] * (i - (s.isEmpty() ? 0 : s.peek()+1)));
+            }
+            s.push(i);
+            i++;
+        }
+        
+        while(!s.isEmpty()){
+            area = Math.max(area, h[s.pop()] * (n - (s.isEmpty() ? 0 : s.peek()+1)));
+        }
+        
+        return area;
+    }
+}
