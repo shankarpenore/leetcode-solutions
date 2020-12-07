@@ -1,0 +1,91 @@
+class Solution {
+    
+    class Node{
+        int val ;
+        int delta;
+        Node(int v, int x){
+            this.val = v;
+            this.delta = Math.abs(x-v);
+        }
+    };
+    
+    class MyComparator implements Comparator<Node>{
+        
+        public int compare(Node n1, Node n2){
+            if(n1.delta == n2.delta){
+                return n1.val-n2.val;
+            }else{
+                return n1.delta-n2.delta;
+            }
+        }
+    };
+    
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        
+        List <Integer> ans = new ArrayList();
+        PriorityQueue <Node> pq = new PriorityQueue(new MyComparator());
+        
+        for(int each: arr){
+            Node n = new Node(each, x);
+            pq.offer(n);
+        }
+        
+        while(k != 0){
+            ans.add(pq.poll().val);
+            k--;
+        }
+        
+        Collections.sort(ans);
+//         int index = Arrays.binarySearch(arr, x);
+//         int low =-1, 
+//         int high = -1;
+        
+//         if(index < 0){
+            
+//             if(arr[0] > x){
+//                 low = 0; 
+//                 k--;
+//                 hight = low;
+//                 while(k != 0){
+//                     high++;
+//                     k--;
+//                 }
+//             }else if(arr[arr.length-1] < x){
+//                 high = arr.length-1;
+//                 low = high;
+//                 k--;
+//                 while(k != 0){
+//                     low--;
+//                     k--;
+//                 }
+                
+//             }else{
+//                for( int i = 0; i < arr.length-1; i++){
+//                  if(arr[i] < x && arr[i+1] > x){
+//                    low = i;
+//                      k--1;
+//                  break;
+//                }
+//                    high = low;
+//                   while(k !=0 && low >= 0 && high < arr.length){
+//                       if(low == high){
+//                           k--;
+//                         if(Math.abs(arr[low]-x) < Math.abs(arr[high-x]));
+//                       }
+                     
+//                   }
+//             }
+//             }
+
+//         }else{
+//             k--;
+//             low = index -1;
+//             high = index + 1;
+            
+//             while(low >=0 && high < arr.length && k!=0){
+                
+//             }
+//         }
+        return ans;
+    }
+}
