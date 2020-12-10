@@ -1,0 +1,56 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isEvenOddTree(TreeNode root) {
+        
+        Queue <TreeNode> q = new LinkedList();
+        q.offer(root);
+        
+        boolean even = true;
+        while(!q.isEmpty()){
+            
+            int n = q.size();
+            TreeNode pre = null;
+            while( n != 0){
+                
+                TreeNode poped = q.poll();
+                if(even && (poped.val % 2 ==0)){
+                    System.out.println("Hi");
+                    return false;
+                }
+                if(!even && poped.val % 2 != 0){
+                    return false;
+                }
+                
+                if(pre != null){
+                    if(even && pre.val >= poped.val)
+                        return false;
+                    else if(!even && pre.val <= poped.val)
+                        return false;
+                }
+                pre = poped;
+                
+                if(poped.left != null)  q.offer(poped.left);
+                if(poped.right != null) q.offer(poped.right);
+                n--;
+            }
+            
+            even = even == true ? false : true;
+        }
+        
+        return true;
+    }
+}
