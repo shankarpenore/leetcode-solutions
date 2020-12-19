@@ -1,0 +1,47 @@
+class Solution {
+    int ans = 0;
+    public int minNumberOperations(int[] target) {
+        // helper(target, 0, target.length-1);
+        ans = target[0];
+        for(int i =1; i < target.length; i++){
+            if(target[i] > target[i-1]){
+                ans = ans + target[i]-target[i-1];
+            }
+        }
+        return ans;
+    }
+    
+//     public void helper(int[] target, int i, int j){
+        
+//         if(i > j) return ;
+        
+//         if( i == j){
+//             ans = ans + target[i];
+//             return;
+//         };
+        
+//         int min = Integer.MAX_VALUE;
+//         for(int x = i; x <= j; x++){
+//             min = Math.min(min, target[x]);
+//         }
+//         ans += min;
+        
+//         for(int x = i; x <= j; x++){
+//             target[x] = target[x]-min;
+//         }
+        
+//         int start = i;
+//          for(int x = i; x <= j; x++){
+//             if(target[x] == 0){
+//                 helper(target, start, x-1);
+//                 start = x+1;
+//             }
+//         }
+        
+//         helper(target, start, j);
+        
+//     }
+}
+
+// [3,1,1,2], 1
+//  [2, 0, 0, 1]
