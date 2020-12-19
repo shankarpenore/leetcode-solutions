@@ -1,0 +1,29 @@
+class Solution {
+    
+    public int kthSmallest(int[][] mat, int k) {
+        
+        PriorityQueue <Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
+        int cols = mat[0].length;
+        
+        pq.offer(0);
+        
+        for(int row[] : mat){
+            
+            PriorityQueue <Integer> next = new PriorityQueue<Integer>(Collections.reverseOrder());
+            
+            for(int each : pq){
+                
+                for(int c = 0; c < cols; c++){
+                    next.add(each+row[c]);
+                    
+                    if(next.size() > k) next.poll();
+                }
+            }
+            
+            pq = next;
+        }
+        
+        return pq.poll();
+    }
+   
+}
