@@ -1,0 +1,34 @@
+class Solution {
+    
+    long dp[][];
+    
+    public int countRoutes(int[] locations, int start, int finish, int fuel) {
+        
+        int n = locations.length;
+        dp = new long[n][fuel+1];
+        
+        for(int i = 0; i < n; i++){
+            Arrays.fill(dp[i], -1);
+        }
+        return (int)helper(locations, finish, fuel, start);
+    }
+    
+    public long helper(int []locations, int finish, int fuel, int cur){
+
+        if(fuel < 0) return 0;
+        
+        if(dp[cur][fuel] != -1) return dp[cur][fuel];
+        
+        long ans = (cur == finish)? 1 : 0; 
+        
+        for(int i = 0; i < locations.length; i++){
+            if(i != cur){
+                int fueldiff = Math.abs(locations[cur]-locations[i]);
+                ans = (ans + helper(locations, finish, fuel-fueldiff,i)) % 1000000007;     
+            }
+        }
+        
+        dp[cur][fuel] = ans;
+        return dp[cur][fuel];
+    }
+}
