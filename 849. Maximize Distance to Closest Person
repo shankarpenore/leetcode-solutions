@@ -1,29 +1,40 @@
 class Solution {
     public int maxDistToClosest(int[] seats) {
         
-        int ans = 0;
-        for(int i = 0; i<seats.length; i++){
+        int n = seats.length;
+        
+        int closestleft[] = new int[n]; // getting left neibours distance 
+        int left = 20000; //maximum  possible distance, from input constraints
+        for(int i =0; i < n; i++){
             if(seats[i] == 1){
-                ans  = Math.max(ans, i);
-                break;
-            }
+                closestleft[i] = 0;
+                left = 0;
+            }else{
+                left++;
+                closestleft[i] = left;
+            }    
         }
-        for(int i = seats.length-1; i>=0; i--){
+        
+        int closestright[] = new int[n]; //// getting right neibours distance
+        int right = 20000; //maximum  possible distance, from input constraints
+        for(int i = n-1; i >=0; i--){
             if(seats[i] == 1){
-                ans  = Math.max(ans, seats.length-1-i);
-                break;
+                closestright[i] = 0;
+                right = 0;
+            }else{
+                right++;
+                closestright[i] = right;
             }
         }
         
-        int count = 0;
-        for(int i =0 ;i<seats.length; i++){
-            if(seats[i] == 1){
-                count = 0;
-            }else{
-                count++;
-                ans = Math.max(ans,(count+1)/2);
+        int dist = 0;  // getting maximum distance to closest person, either left or right
+        for(int i = 0; i < n ; i++){
+            int tmp = Math.min(closestleft[i], closestright[i]);
+            if(tmp > dist){
+                dist = tmp;
+
             }
-        }
-     return ans;
+        }       
+        return dist;
     }
 }
