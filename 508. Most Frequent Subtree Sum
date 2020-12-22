@@ -1,0 +1,65 @@
+**Basic Idea**
+ *  * helper method is calculating the sums of all possible subtrees
+* hashmap is used to store the sums and their freqencies.**
+
+```
+
+class Solution {
+    
+    HashMap <Integer, Integer> map = new HashMap();
+    
+    public int[] findFrequentTreeSum(TreeNode root) {
+
+        helper(root);
+        
+        Iterator <Map.Entry<Integer, Integer>>iter = map.entrySet().iterator();
+        int max = 0;
+        while(iter.hasNext()){
+            Map.Entry<Integer, Integer> entry = iter.next();
+            int val = entry.getValue();
+            if( val > max){
+                max = val;
+            }
+        }
+        
+        List <Integer>list = new ArrayList();
+        Iterator <Map.Entry<Integer, Integer>>iter2 = map.entrySet().iterator();
+        while(iter2.hasNext()){
+            Map.Entry<Integer, Integer> entry = iter2.next();
+            int val = entry.getValue();
+            int key = entry.getKey();
+            if( val == max){
+                list.add(key);
+            }
+        }
+        
+        int ans[] = new int[list.size()];
+        for(int i = 0; i < list.size(); i++)
+        {
+            ans[i] = list.get(i);
+        }
+        
+        return ans;
+    }
+    
+    public int helper(TreeNode root){
+        
+        if(root == null) return 0;
+        
+        if(root.left == null && root.right == null){
+            int freq = 1 + map.getOrDefault(root.val, 0);
+            map.put(root.val, freq);
+            return root.val;
+        }
+        
+        int left = helper(root.left);
+        int right = helper(root.right);
+        
+        int val = left+right+root.val; 
+        int freq = 1+map.getOrDefault(val, 0);
+        map.put(val, freq);
+        
+        return val;
+    }
+}
+```
