@@ -1,0 +1,51 @@
+class Solution {
+    
+    class TimeNode{
+        int hours;
+        int minutes;
+        
+        TimeNode(String t){
+            String tarr[] = t.split("\\:");
+            hours = Integer.parseInt(tarr[0]);
+            minutes = Integer.parseInt(tarr[1]);
+        }
+    }
+    
+    class MyComparator implements Comparator<TimeNode>{
+        public int compare(TimeNode t1, TimeNode t2){
+            if(t1.hours == t2.hours) 
+                return t1.minutes-t2.minutes;
+            else
+                return t1.hours-t2.hours;
+        }
+    }
+    public int findMinDifference(List<String> timePoints) {
+        
+        List <TimeNode> timelist = new ArrayList();
+        for(String time : timePoints){
+            timelist.add(new TimeNode(time));
+        }
+        
+        Collections.sort(timelist, new MyComparator());
+        
+        int delta = 1440;
+        for(int i = 1; i < timelist.size(); i++){
+            delta = Math.min(delta, helper(timelist.get(i-1), timelist.get(i)));
+        }
+        
+        
+        TimeNode t1 = timelist.get(0);
+        TimeNode t2 = timelist.get(timelist.size()-1);
+        
+        int corner = ((t1.hours * 60) + t1.minutes) + 1440 - ((t2.hours * 60) + t2.minutes);
+        // int corner = timelist.get(0) + (1440 - timelist.get());
+        
+        return Math.min(delta,corner);
+    }
+    
+    public int helper(TimeNode t1, TimeNode t2){
+        int ans = Math.abs(t2.hours-t1.hours) * 60;
+        ans = ans + t2.minutes-t1.minutes;
+        return ans;
+    }
+}
