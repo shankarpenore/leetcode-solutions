@@ -1,0 +1,38 @@
+class Solution {
+    public int minMoves2(int[] nums) {
+        
+        Arrays.sort(nums);
+//      we can get maximum possible moves by converting each element to maximum element.
+        long ans = helper(nums, nums[nums.length-1]);
+        
+//      binary search
+        int left = 0;
+        int right = nums.length-1;
+        while(left <= right){
+            
+            int mid = left + ((right-left)/2);
+            long value = helper(nums, nums[mid]);
+//          if we have less moves that previous moves , 
+//          record it ans keep perfomring binary seach on left part
+            if(value <= ans){
+                ans = value;
+                right = mid-1;
+            }
+//          else, binary search on right part
+            else{
+                left = mid+1;
+            } 
+        }
+        return (int)ans;
+    }
+    
+    public long helper(int nums[], int compareto){
+        
+        long ans = 0;
+        
+        for(int i = 0; i < nums.length; i++){
+            ans += Math.abs(compareto-nums[i]);
+        }
+        return ans;
+    }
+}
