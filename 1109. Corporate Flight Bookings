@@ -1,0 +1,49 @@
+unable to understand logic from code.,, this guy has explained it very well, check out below link.
+https://www.youtube.com/watch?v=oraLaip04C4
+```
+class Solution {
+    public int[] corpFlightBookings(int[][] bookings, int n) {
+        
+        int ans[] = new int[n];
+        
+         for(int []flight : bookings){
+            int from = flight[0];
+            int to = flight[1];
+            int seats = flight[2];
+            
+             ans[from-1] += seats;
+             if(to < n) ans[to] -= seats;
+        }
+        
+        for(int i = 1; i<n; i++){
+            ans[i] = ans[i-1] + ans[i];
+        }
+        
+        return ans;
+//         HashMap <Integer, Integer>map = new HashMap();
+        
+//         for(int []flight : bookings){
+//             int from = flight[0];
+//             int to = flight[1];
+//             int seats = flight[2];
+            
+//             for(int i = from; i <= to; i++){
+//                 int newvalue = seats + map.getOrDefault(i, 0);
+//                 map.put(i, newvalue); 
+//             }
+//         }
+        
+//         int ans[] = new int[n];
+//         for(int i = 1; i <= n; i++){
+            
+//             if(map.containsKey(i)){
+//                 ans[i-1] = map.get(i);
+//             }
+//         }
+        
+//         return ans;
+    }
+}
+
+
+```
