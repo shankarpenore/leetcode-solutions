@@ -1,0 +1,78 @@
+
+
+class TimeMap {
+    
+    // List <Node>storage;
+    HashMap <String, List<Node>> map;
+    
+    public TimeMap() {
+        map = new HashMap();
+    }
+    
+    public void set(String key, String value, int timestamp) {
+            
+        if(!map.containsKey(key)){
+            map.put(key, new ArrayList());
+        }
+        
+        Node node = new Node(value, timestamp);
+        map.get(key).add(node);
+       
+       // storage.add(n);
+    
+    }
+    
+    public String get(String key, int timestamp) {
+        
+        if(!map.containsKey(key)) return null;
+            
+        List <Node>l = map.get(key);
+        
+        String ans = "";
+        int prev_left = 0;
+        int left =0;
+        int right = l.size()-1;
+        int mid = 0;
+        while(left <= right){
+            mid = left + (right-left)/2;
+            if(l.get(mid).timestamp > timestamp){
+                right = mid-1;
+            }else{
+                
+                if(left >= prev_left){
+                     ans =  l.get(mid).value;
+                     prev_left = left;
+                }
+                left = mid+1;
+            }
+        }
+        
+        return ans;
+    }
+    
+    
+    class Node{
+        String value;
+        Integer timestamp;
+        
+        public Node(String value, Integer timestamp){
+            this.value = value;
+            this.timestamp =timestamp;
+        }
+        
+    }
+    
+    class MyComparator implements Comparator<Node>{
+        
+        public int compare(Node n1, Node n2){
+            return n1.timestamp-n2.timestamp;
+        }
+    }
+}
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.set(key,value,timestamp);
+ * String param_2 = obj.get(key,timestamp);
+ */
