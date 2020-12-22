@@ -1,0 +1,39 @@
+class Solution {
+    
+    Map <Integer, List<Integer>>g = new HashMap<>();
+    
+    public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+        
+//      building graph
+        for(int edge[] : edges){
+            
+            g.putIfAbsent(edge[0],new ArrayList<Integer>());
+            g.get(edge[0]).add(edge[1]);
+            g.putIfAbsent(edge[1],new ArrayList<Integer>());
+            g.get(edge[1]).add(edge[0]);
+            
+        }
+        
+      Set <Integer>visited = new HashSet();
+        
+    return helper(0, visited,hasApple);
+        
+    
+    }
+    
+   public int helper(int node, Set<Integer> visited, List<Boolean> hasApple){
+      
+        visited.add(node);
+        int ans = 0;
+        
+        for(int child : g.getOrDefault(node, new ArrayList<>())){
+            
+            if(visited.contains(child)) 
+                continue;
+            ans += helper(child, visited, hasApple);
+        }
+       
+       if((ans > 0 || hasApple.get(node)) && node != 0) ans += 2;
+       return ans;
+   }   
+}
