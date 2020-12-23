@@ -1,0 +1,88 @@
+class Solution {
+    // boolean reached = false;
+    public boolean canCross(int[] stones) {
+        
+        for(int i =3; i < stones.length; i++){
+            if(stones[i] > stones[i-1] * 2){
+                return false;
+            }
+        }
+        // if(stones == null || stones.length < 2) return false;
+        Set <Integer> stonesPos = new HashSet();
+        Stack <Integer> possiblePos = new Stack();
+        Stack <Integer> jumps = new Stack();
+        
+        for(int stone : stones){
+            stonesPos.add(stone);
+        }
+        possiblePos.add(0);
+        jumps.add(0);
+        
+        while(!possiblePos.isEmpty()){
+            int position = possiblePos.pop();
+            int jumpdistace = jumps.pop();
+            
+            for(int i = jumpdistace-1; i<= jumpdistace+1; i++){
+                if(i <= 0) continue;
+                int nextposition = position+i;
+                if(nextposition == stones[stones.length-1]){
+                    return true;
+                }else if(stonesPos.contains(nextposition)){
+                    possiblePos.add(nextposition);
+                    jumps.add(i);
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+//     public boolean canreach(int stones[], int index, int lastk){
+        
+//         if(index == stones.length-1){
+//             reached = true;
+//             return true;
+//         }
+            
+//         if(lastk < 0) return false;
+        
+//         boolean a =false, b =false, c=false;
+//         int i = Math.min(stones.length-1, index+lastk+1);
+//         while(i > index){
+            
+//             if(reached) return true;
+            
+//             if(stones[i]-stones[index] == lastk){
+//                  a = canreach(stones, i, lastk);
+//                 if(a) break;
+
+//             }else if(stones[i]-stones[index] == lastk+1){
+//                  b = canreach(stones, i, lastk+1);
+//                 if(b) break;
+//             }else if(stones[i]-stones[index] == lastk-1){
+//                  c = canreach(stones, i, lastk-1);
+//                 if(c) break;
+//             }
+//             i--;
+//         }
+
+//         for(int i = index+1; i < stones.length; i++){
+            
+//             if(stones[i] > stones[index]+lastk+1) break;
+            
+//             if(stones[i]-stones[index] == lastk){
+//                  a = canreach(stones, i, lastk);
+//                 if(a) set.add(i);
+//             }else if(stones[i]-stones[index] == lastk+1){
+//                  b = canreach(stones, i, lastk+1);
+//                 if(b) set.add(i);
+//             }else if(stones[i]-stones[index] == lastk-1){
+//                  c = canreach(stones, i, lastk-1);
+//                 if(c) set.add(i);
+//             }
+//         }
+        
+        // return a || b || c ;
+    // }
+    
+}
