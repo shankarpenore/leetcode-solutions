@@ -1,0 +1,33 @@
+class Solution {
+    public int countStudents(int[] students, int[] sandwiches) {
+        int ones = 0;
+        int zeros = 0;
+        
+        for(int s : students){
+            if(s == 1){
+                ones++;
+            }else{
+                zeros++;
+            }
+        }
+        int i = 0;
+        for(; i < sandwiches.length; i++){
+            if(sandwiches[i] == 1){
+                if(ones == 0) break;
+                ones--;
+            }else{
+                if(zeros == 0) break;
+                zeros--;
+            }
+        }
+        
+        return sandwiches.length-i;
+    }
+}
+
+
+  
+// [1,1,1,0,0,1]   [1,0,0,0,1,1]
+
+// // 1's 4             3
+// // 0's 2             3
