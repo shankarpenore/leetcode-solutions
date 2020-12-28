@@ -1,0 +1,72 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List <TreeNode> ans = new ArrayList<TreeNode>();
+    Set <Integer> deleting = new HashSet();
+    HashMap <Integer, TreeNode> parents = new HashMap();
+    
+//  to delete the actual nodes
+    public void deleteNodes(TreeNode node){
+        if(node == null) return;
+        deleteNodes(node.left);
+        deleteNodes(node.right);
+        if(deleting.contains(node.val)){
+            if(node.left != null){
+                ans.add(node.left);
+            }
+            if(node.right != null){
+                ans.add(node.right);
+            }
+            
+            TreeNode parent = parents.get(node.val);
+            if(parent == null) return;
+            if(parent.left != null && parent.left.val == node.val){
+                parent.left = null;
+            }else{
+                parent.right = null;
+            }
+        }
+    }
+    
+//  to find out parent of each node
+    public void dfs(TreeNode root){
+        if(root == null) return;
+        
+        if(root.left != null){
+            parents.put(root.left.val, root);
+            dfs(root.left);
+        }
+        
+        if(root.right != null){
+            parents.put(root.right.val, root);
+            dfs(root.right);
+        }
+    }
+    
+    public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
+        for(int each : to_delete){
+            deleting.add(each);        
+        }
+        
+        dfs(root);
+        parents.put(root.val, null);
+        deleteNodes(root);
+        if(!deleting.contains(root.val)){
+            ans.add(root);
+        }
+        return ans;
+    }
+}
