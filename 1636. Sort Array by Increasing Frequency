@@ -1,0 +1,29 @@
+class Solution {
+    
+    int rows = 0;
+    int cols = 0;
+    
+    public boolean diagonalTraversal(int matrix[][], int i, int j){
+        while(i+1 < rows && j+1 < cols){
+            if(matrix[i][j] != matrix[i+1][j+1]) return false;
+            i++;j++;
+        }
+        return true;
+    }
+    public boolean isToeplitzMatrix(int[][] matrix) {
+        
+        rows = matrix.length;
+        cols = matrix[0].length;
+        
+        for(int r = 0; r < rows; r++){
+            if(!diagonalTraversal(matrix, r, 0)) return false;
+                
+        }
+        
+        for(int c = 0; c < cols ;c++){
+            if(!diagonalTraversal(matrix, 0, c)) return false;
+        }
+        
+        return true;
+    }
+}
