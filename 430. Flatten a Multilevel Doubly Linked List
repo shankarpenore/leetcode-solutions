@@ -1,0 +1,50 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+};
+*/
+
+class Solution {
+    public Node flatten(Node head) {
+        
+        if(head == null) return head;
+        
+        Node iter = head;
+        while(iter != null){
+            if(iter.child != null){
+                // flatten child list
+                Node after = flatten(iter.child); 
+                
+                //save original next
+                Node originalnext = iter.next; 
+                
+                // adjust pointers between first node of child list & cur node
+                iter.next = after;   
+                if(after != null){
+                    after.prev = iter;
+                }
+                
+                //go to end of child list
+                Node iter2 = after;
+                while(iter2 !=null && iter2.next != null){
+                    iter2 = iter2.next;
+                }
+                
+                //adjust pointers between last node of flatten child list and saved original next pointer 
+                iter2.next  = originalnext;
+                if(originalnext != null){
+                    originalnext.prev = iter2;
+                }
+                iter.child = null;
+            }
+            
+            // it no child list exits continue the iteration
+            iter = iter.next;
+        }
+        return head;
+    }
+}
