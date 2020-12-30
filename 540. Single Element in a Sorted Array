@@ -1,0 +1,17 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        
+        if(nums.length == 1) return nums[0]; 
+        
+//      every pair is adjacent to each other so increment by 2.
+//      [2,3,3], [2,2,3] in all this examples if nums[i] != nums[i+1]
+//      then it must be first number, which is at i   
+        for(int i = 0 ; i < nums.length-2; i += 2){
+            if(nums[i] != nums[i+1]){
+                return nums[i];
+            }
+        }
+        return nums[nums.length-1];
+        
+    }
+}
