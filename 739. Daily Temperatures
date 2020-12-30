@@ -1,0 +1,28 @@
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        
+        if(T == null || T.length == 0) return null;
+        
+        int ans[] = new int[T.length];
+        Stack <Integer> values = new Stack();
+        Stack <Integer> indices = new Stack();
+        
+        values.push(T[0]);
+        indices.push(0);
+        
+        for(int i = 1; i < T.length; i++){
+            while(!values.isEmpty() && values.peek() < T[i]){
+                values.pop();
+                int prei = indices.pop();
+                ans[prei] = i-prei;
+            }
+            values.push(T[i]);
+            indices.push(i);
+        }
+        
+        while(!indices.isEmpty()){
+            ans[indices.pop()] = 0;
+        }
+        return ans;
+    }
+}
