@@ -1,0 +1,40 @@
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+     
+        if(nums == null || nums.length == 0) return nums;
+        
+//      find maximum element index, maxi
+        int max = nums[0];
+        int maxi = 0;
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] > max){
+                max = nums[i];
+                maxi = i;
+            }
+        }
+        
+        int ans[] = new int[nums.length];
+//      stack to store indices
+        Stack <Integer> stack = new Stack();
+//      process from i = 0 to n
+        for(int i = 0; i < nums.length; i++){
+            while(!stack.isEmpty() && nums[stack.peek()] < nums[i]){
+                ans[stack.pop()] = nums[i];
+            }
+            stack.push(i);
+        }
+//      process from i =0 to maxi
+        for(int i = 0; i <= maxi; i++){
+            while(!stack.isEmpty() && nums[stack.peek()] < nums[i]){
+                ans[stack.pop()] = nums[i];
+            }
+            stack.push(i);
+        }
+//      elements left in stack, assign -1;
+        while(!stack.isEmpty()){
+            ans[stack.pop()] = -1;
+        }
+        
+        return ans;
+    }
+}
