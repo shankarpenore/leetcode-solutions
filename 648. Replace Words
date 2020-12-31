@@ -1,0 +1,65 @@
+class Solution {
+    
+    class TrieNode{
+        boolean isWord = false;
+        TrieNode children[] = new TrieNode[26];
+        
+        public void insert(String s){
+            
+            TrieNode iter = root;
+            char arr[] = s.toCharArray();
+            int i =0;
+            
+            while(iter != null && i < arr.length){
+                if(iter.children[arr[i]-'a'] == null){
+                    iter.children[arr[i]-'a'] = new TrieNode();
+                }
+                iter = iter.children[arr[i]-'a'];
+                i++;
+                
+            }
+            iter.isWord = true;
+        }
+        
+        public String search(String s){
+            
+            TrieNode iter = root;
+            char arr[] = s.toCharArray();
+            int i =0;
+            boolean found = false;
+            StringBuilder ans = new StringBuilder("");
+            
+            while(iter != null && i < arr.length){
+                if(iter.isWord){
+                    found = true;
+                    break;
+                }
+                if(iter.children[arr[i]-'a'] != null){
+                    ans.append(arr[i]);
+                }
+                iter = iter.children[arr[i]-'a'];
+                i++;
+            }
+            return !found ? "":ans.toString();
+        }
+    }
+    
+    TrieNode root ;
+    
+    public String replaceWords(List<String> dictionary, String sentence) {
+        
+        root = new TrieNode();
+        for(String word : dictionary){
+            root.insert(word);
+        }
+        
+        String ans[] = sentence.split("\\s+");
+        for(int i = 0; i < ans.length; i++){
+            String prefix = root.search(ans[i]);
+            if(!prefix.equals("")){
+                ans[i] = prefix;
+            }
+        }
+        return String.join(" ", ans);
+    }
+}
