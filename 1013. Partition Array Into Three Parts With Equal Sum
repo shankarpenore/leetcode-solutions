@@ -1,0 +1,24 @@
+class Solution {
+    public boolean canThreePartsEqualSum(int[] arr) {
+        
+        int sum = 0;
+        for(int each : arr){
+            sum += each;
+        }
+        
+        int avg = sum/3;
+        int count = 0;
+        int partsum = 0;
+        
+        for(int each : arr){
+            partsum += each;
+            if(partsum == avg){
+                count++;
+                partsum =0;
+            }
+        }
+        
+        return count >= 3;
+        
+    }
+}
