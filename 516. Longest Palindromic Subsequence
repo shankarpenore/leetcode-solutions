@@ -1,0 +1,38 @@
+class Solution {
+    public int longestPalindromeSubseq(String s) {
+        
+        int n = s.length();
+        int dp[][] = new int[n][n];
+        
+//      each character is palindrom
+        for(int i =0; i < n; i++){
+            dp[i][i] = 1;
+        }
+        
+//      adjacent 2 chars, if the are palindrom
+        for(int i = 0; i < n-1; i++){
+            if(s.charAt(i) == s.charAt(i+1)){
+                dp[i][i+1] = 2;
+            }else{
+                dp[i][i+1] = 1;
+            }
+        }
+        
+        for(int len = 3; len <=n; len++){
+            for(int i = 0,j = len-1; j < n; i++,j++){
+                int leftcharremoved = dp[i+1][j];
+                int rightcharremoved = dp[i][j-1];
+                int max = Math.max(leftcharremoved, rightcharremoved);
+                if(s.charAt(i) == s.charAt(j)){
+                    max = Math.max(max, 2+dp[i+1][j-1]);
+                }
+                
+                dp[i][j] = max;
+            }
+        }
+        
+        return dp[0][n-1];
+    }
+}
+
+    
