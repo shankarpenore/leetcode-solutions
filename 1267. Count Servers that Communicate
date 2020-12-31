@@ -1,0 +1,60 @@
+class Solution {
+    public int countServers(int[][] grid) {
+        
+        int rows = grid.length;
+        int cols = grid[0].length;
+        
+        int count = 0;
+        
+//      scanning rows to count severs   
+        for(int i = 0; i < rows ; i++){
+            count = 0;
+            for(int j = 0; j < cols ; j++){
+                if(grid[i][j] == 1){
+                    count++;
+                }
+            }
+            
+            if(count < 2){
+              continue;   
+            }
+            
+            for(int j = 0; j < cols ; j++){
+                if(grid[i][j] == 1){
+                    grid[i][j] = 2;
+                }
+            }
+            
+        }
+//      scanning cols to count servers   
+        for(int j = 0; j < cols; j++){
+            
+            count = 0;
+            for(int i = 0; i < rows; i++){
+                if(grid[i][j] == 1 || grid[i][j] == 2){
+                    count++;
+                }
+            }
+            
+            if(count < 2){
+              continue;   
+            }
+            
+            for(int i = 0; i < rows; i++){
+                if(grid[i][j] == 1){
+                    grid[i][j] = 2;
+                }
+            }
+
+        }
+        
+        int ans = 0;
+        for(int []row: grid){
+            for(int each : row){
+                if(each == 2) ans++;
+            }
+        }
+        
+        return ans;
+    }
+}
