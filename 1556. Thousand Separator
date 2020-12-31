@@ -1,0 +1,47 @@
+class Solution {
+    public String thousandSeparator(int n) {
+        
+        int one = n/1_000_000_000;
+        n = n%1_000_000_000;
+        
+        int two = n/1_000_000;
+        n = n%1_000_000;
+        
+        int three = n/1_000;
+        n = n%1_000;
+        
+        int four = n;
+        
+        String ans ="";
+        if(one != 0){
+            ans  += one+".";
+        }
+        
+        if(one != 0 && two != 0){
+            String tmp = String.format("%03d", two);
+            ans += tmp+".";
+        }else if(two != 0){
+            ans += two+".";
+        }
+        
+        if(two != 0 && three !=0){
+            String tmp = String.format("%03d", three);
+            ans += tmp+".";
+        }else if(three != 0){
+            ans += three+".";
+        }
+
+        if(three != 0){
+            String tmp = String.format("%03d", four);
+            ans += tmp;
+        }else{
+            ans += four;
+        }
+        
+        return ans;
+    }
+}
+// 2,147,483,648
+    
+   
+    
