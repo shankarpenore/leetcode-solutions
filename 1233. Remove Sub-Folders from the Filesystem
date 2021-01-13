@@ -1,0 +1,69 @@
+class Solution {
+    
+//     class TrieNode{
+//         TrieNode children[] =  new TrieNode[27];
+//         boolean isWord = false;
+//     }
+//     TrieNode root = new TrieNode();
+    
+//     public void insert(String s){
+//             TrieNode iter = root;
+//             for(char c : s.toCharArray()){
+//                 if(Character.isLetter(c)){
+//                     if(iter.children[c-'a'] == null){
+//                         iter.children[c-'a'] = new TrieNode();
+//                     }
+//                     iter = iter.children[c-'a'];
+//                 }else{
+//                     if(iter.children[26] == null ) {
+//                         iter.children[26] = new TrieNode();
+//                     }
+//                     iter = iter.children[26];
+//                 }
+//             }
+//             iter.isWord = true;
+//         }
+    
+//     public String search(String s){
+//         TrieNode iter= root;
+//         StringBuilder ans = new StringBuilder();
+//         for(char c : s.toCharArray()){
+//             if(Character.isLetter(c)){
+//                   iter = iter.children[c-'a'];
+//             }else{
+//                 iter = iter.children[26];
+//             }
+//             if(iter == null) break;
+//             ans.append(c);
+//             if(iter.isWord) break;
+//         }
+        
+//         return ans.toString();
+//     }
+    public List<String> removeSubfolders(String[] folders) {
+        
+          List <String> ans = new ArrayList();
+          Arrays.sort(folders);
+        
+        
+          for(String f : folders){
+              if(ans.isEmpty() || !f.startsWith(ans.get(ans.size()-1)+"/")){
+                  ans.add(f);
+              }
+          }
+          return ans;
+        
+
+//         HashSet <String>set = new HashSet();
+//         for(String f : folders){
+//             this.insert(f);
+//         }
+        
+//         for(String f : folders){
+//             set.add(this.search(f));
+//         }
+        
+//         return new ArrayList<String>(set);
+    }
+}
+
