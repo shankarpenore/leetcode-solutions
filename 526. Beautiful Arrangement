@@ -1,0 +1,33 @@
+class Solution {
+    
+    int ans = 0;
+    Set <Integer> set  = new HashSet();
+    
+    public int countArrangement(int n) {
+        helper(new ArrayList<Integer>(), n);
+        return ans;
+    }
+    public void helper(List <Integer>per, int n){
+        if(per.size() == n){
+            ans++;
+            return;
+        }
+        
+        for(int i = 1; i <=n ; i++){
+            
+            if(!set.contains(i))
+            {
+                int index = per.size()+1;
+                if(index % i == 0 || i%index == 0){
+                    per.add(i);
+                    set.add(i);
+                    helper(per,n);
+                    set.remove(per.get(per.size()-1));
+                    per.remove(per.size()-1);
+                }
+                
+            }
+           
+        }
+    }
+}
