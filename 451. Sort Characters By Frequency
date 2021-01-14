@@ -1,0 +1,30 @@
+class Solution {
+    public String frequencySort(String s) {
+        
+        HashMap <Character, Integer>map = new HashMap();
+        int n = s.length();
+        Character arr[] = new Character[n];
+        
+        for(int i = 0; i < n ; i++){
+            char ch = s.charAt(i);
+            map.put(ch, 1 + map.getOrDefault(ch, 0));
+            arr[i] = s.charAt(i);
+        }
+        
+        Arrays.sort(arr, (c1,c2)->{
+            int freq1 = map.get(c1);
+            int freq2 = map.get(c2);
+            if(freq1 == freq2){
+                return c1-c2;
+            }else{
+                return freq2-freq1;
+            }
+        });
+        
+        StringBuilder ans = new StringBuilder();
+        for(char c : arr){
+            ans.append(c);
+        }
+        return ans.toString();
+    }
+}
