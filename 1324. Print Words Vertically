@@ -1,0 +1,75 @@
+lot of people have used build in functions to do the task.
+here i have explained my approch without using any library functions;
+
+
+
+**Basic Idea** : 
+
+eg : "CONTEST IS COMING"
+convert given text string into array of strings
+str = ["CONTEST", "IS",  "COMING"]
+
+we will also maintain the index array for this string to refer to current  character of each string 
+i have initialized these array with length of string(str[i].length);
+
+indices = [7, 2, 6];
+
+now get the longest string length, here in this example it is 7
+so we will iterate 7 times.
+
+each time, we will pick up one character of each string , append those into a word, remove trailing spaces and
+insert into  result list, this result list is final anwer that this function will return
+
+["CONTEST", "IS",  "COMING"]
+--|-------------|-----|
+   
+   "CIS", append to result
+   
+ ["CONTEST", "IS",  "COMING"]
+ ----|------------|------|
+	  
+"OSO", append to result
+
+hope i was able to make you understand
+
+```
+class Solution {
+    public List<String> printVertically(String s) {
+        
+        String str[] = s.trim().split("\\s+");
+        int indices[] = new int[str.length];
+        
+        int max = 0, i = 0; 
+        for(String each : str){
+            max = Math.max(max, each.length());
+            indices[i++] = each.length();
+        }
+        
+        List <String> ans = new ArrayList<String>();
+        
+        for(i = 0; i < max; i++){
+            StringBuilder word = new StringBuilder();
+            for(int k = 0; k < str.length; k++){
+                if(indices[k] > 0){
+                    word.append(str[k].charAt(str[k].length()-indices[k]));
+                    indices[k] -= 1;
+                }else{
+                    word.append(" ");
+                }
+            }
+            
+            //in case, no word found
+            if(word.length() < 1) break;
+            // removing trailing spaces
+            while(word.charAt(word.length()-1) == ' '){
+                word.deleteCharAt(word.length()-1);
+            }
+            
+            ans.add(word.toString());
+        }
+        
+        return ans;
+    }
+}
+
+```
