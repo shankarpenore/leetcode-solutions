@@ -1,0 +1,43 @@
+class Solution {
+    public boolean carPooling(int[][] trips, int capacity) {
+        
+        
+        int timestamp[] = new int[1001];
+        for(int []t : trips){
+            timestamp[t[1]] += t[0];
+            timestamp[t[2]] -= t[0];
+        }
+        
+        int passengers = 0;
+        for(int p : timestamp){
+            passengers += p;
+            if(passengers > capacity) return false;
+        }
+        
+        return true;
+        
+//         if(trips == null || trips.length == 0) return true;
+        
+//         if(trips.length == 1){
+//             return trips[0][0] <= capacity;
+//         }
+        
+// //      sort trips by initial locations;
+//         Arrays.sort(trips, (t1,t2)->t1[1]-t2[1]);
+//         int n = trips.length;
+        
+//         int i = 0;
+//         while(i < n){
+//             int count = trips[i][0];
+//             int curend = trips[i][2];
+//             boolean found = false;
+//             while(i+1 < n && trips[i+1][1] < curend){
+//                 i++;
+//                 found = true;
+//             }
+//             if(count > capacity) return false;
+//             if(!found) i++;
+//         }
+        // return true;
+    }
+}
