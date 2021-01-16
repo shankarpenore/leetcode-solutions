@@ -1,0 +1,45 @@
+class Solution {
+    
+    boolean visited[][];
+    
+    public int numEnclaves(int[][] A) {
+        
+        int rows = A.length, cols = A[0].length;
+        visited = new boolean[rows][cols]; 
+//       dfs on first row and last row
+        for(int j = 0; j < cols; j++){
+            dfs(A, 0, j);
+            dfs(A, rows-1 ,j);
+        }
+        
+//       dfs on first and last column
+         for(int i = 0; i < rows; i++){
+            dfs(A, i, 0);
+            dfs(A, i , cols-1);
+         }
+        
+        int count = 0;
+        for(int i = 0 ; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                count += A[i][j];
+            }
+        }
+        
+        return count;
+    }
+    
+    public void dfs(int A[][], int i, int j){
+        int r = A.length;
+        int c = A[0].length;
+        if(i < 0 || j < 0 || i >= r || j >= c || A[i][j] == 0 || visited[i][j]){
+            return;
+        }
+        visited[i][j] = true;
+        A[i][j] = 0;
+        
+        dfs(A, i+1, j);
+        dfs(A, i, j+1);
+        dfs(A, i-1, j);
+        dfs(A, i, j-1);
+    }
+}
