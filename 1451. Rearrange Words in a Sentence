@@ -1,0 +1,32 @@
+class Solution {
+    public String arrangeWords(String text) {
+        
+        Map <Integer, List<String>> map = new HashMap();
+        String arr[] = text.split("\\s+");
+        arr[0] = arr[0].toLowerCase();
+        int max = 0;
+        
+        for(String s: arr){
+            int len = s.length();
+            List <String>l = map.getOrDefault(len, new LinkedList());
+            l.add(s);
+            map.put(len, l);
+            max = Math.max(max, len);
+        }
+        
+        StringBuilder ans = new StringBuilder();
+        for(int i = 1; i <= max ; i++){
+            if(!map.containsKey(i)) continue;
+            List <String>l = map.get(i);
+            for(String each : l){
+                ans.append(each);
+                ans.append(" ");
+            }
+             
+        }
+        char c = ans.charAt(0);
+        ans.setCharAt(0, Character.toUpperCase(c));
+        
+        return ans.toString().trim();
+    }
+}
