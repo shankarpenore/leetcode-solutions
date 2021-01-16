@@ -1,0 +1,18 @@
+class Solution {
+    public int leastBricks(List<List<Integer>> wall) {
+        
+        Map <Integer, Integer> map = new HashMap();
+        int max = 0;
+        for(List<Integer> row : wall){
+            int rsum = 0;
+            for(int i = 0; i < row.size()-1; i++){
+                rsum += row.get(i);
+                int freq = 1 + map.getOrDefault(rsum, 0);
+                map.put(rsum, freq);
+                max = Math.max(max, freq);
+            }
+        }
+        
+        return wall.size()-max;
+    }
+}
