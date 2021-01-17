@@ -1,0 +1,19 @@
+class Solution {
+    List <Integer>ans = new ArrayList();
+    public List<Integer> sequentialDigits(int low, int high) {
+       for(int i = 1 ; i <= 8; i++){
+           helper(i, low, high);
+       }
+       Collections.sort(ans);
+       return ans;
+    }
+    
+    public void helper(int cur, int low, int high){
+        
+        if(cur > high) return;
+        if(cur >= low) ans.add(cur);
+        if(cur%10 == 9) return;
+        int next = (cur*10) + (cur%10)+1;
+        helper(next , low,  high);
+    }
+}
