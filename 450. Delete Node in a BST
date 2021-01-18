@@ -1,72 +1,94 @@
 
 class Solution {
-    TreeNode root = null;
+    // TreeNode root = null;
     public TreeNode deleteNode(TreeNode root, int key) {
-        this.root = root;
-        helper(root, null, 'l', key);
-        return this.root;
-    }
-    
-    public void helper(TreeNode root, TreeNode parent, char d, int key){
-        if(root == null) return;
-        if(root.val == key ){
-            //leaf node
-            if(root.left == null && root.right == null){
-                if(parent == null) {
-                    this.root = null;
-                    return;
-                }
-                else{
-                    if(d == 'l'){
-                        parent.left = null;
-                    }else{
-                        parent.right = null;
-                    }
-                }
-                return ;
-            }
-            
-          // any other node
-            if(root.right == null){
-                root.val = maximumValFromLeft(root.left, root);
-            }else{
-                root.val = miminumValFromRight(root.right, root);
-            }
-            
-        }
-        
+        // this.root = root;
+        // helper(root, null, 'l', key);
+        // return this.root;
+        if(root == null) return null;
         if(root.val > key){
-            helper(root.left, root ,'l', key);
+            root.left = deleteNode(root.left, key);
+        }else if(root.val < key){
+            root.right = deleteNode(root.right, key);
         }else{
-             helper(root.right, root ,'r', key);   
+            
+            if(root.left == null) return root.right;
+            if(root.right == null)return root.left;
+            
+            TreeNode minNode = minInRightTree(root.right);
+            minNode.left = root.left; 
+            return root.right;
         }
+        return root;
     }
     
-    public int maximumValFromLeft(TreeNode root, TreeNode parent){
-        if(root.right == null){
-            if(root == parent.left){
-                parent.val = root.val;
-                parent.left = root.left;
-                return parent.val;
-            }
-            parent.right = root.left;
-            return root.val;
+    public TreeNode minInRightTree(TreeNode root){
+        while(root.left != null){
+            root = root.left;
         }
-        return maximumValFromLeft(root.right, root);
+        return root;
+    }
+    
+//     public void helper(TreeNode root, TreeNode parent, char d, int key){
+//         if(root == null) return;
+//         if(root.val == key ){
+//             //leaf node
+//             if(root.left == null && root.right == null){
+//                 if(parent == null) {
+//                     this.root = null;
+//                     return;
+//                 }
+//                 else{
+//                     if(d == 'l'){
+//                         parent.left = null;
+//                     }else{
+//                         parent.right = null;
+//                     }
+//                 }
+//                 return ;
+//             }
+            
+//           // any other node
+//             if(root.right == null){
+//                 root.val = maximumValFromLeft(root.left, root);
+//             }else{
+//                 root.val = miminumValFromRight(root.right, root);
+//             }
+            
+//         }
         
-    }
+//         if(root.val > key){
+//             helper(root.left, root ,'l', key);
+//         }else{
+//              helper(root.right, root ,'r', key);   
+//         }
+//     }
     
-    public int miminumValFromRight(TreeNode root, TreeNode parent){
-        if(root.left == null){
-            if(root == parent.right){
-                parent.val = root.val;
-                parent.right = root.right;
-                return parent.val;
-            }
-            parent.left = root.right;
-            return root.val;
-        }
-        return miminumValFromRight(root.left, root);
-    }
+//     public int maximumValFromLeft(TreeNode root, TreeNode parent){
+//         if(root.right == null){
+//             if(root == parent.left){
+//                 parent.val = root.val;
+//                 parent.left = root.left;
+//                 return parent.val;
+//             }
+//             parent.right = root.left;
+//             return root.val;
+//         }
+//         return maximumValFromLeft(root.right, root);
+        
+//     }
+    
+//     public int miminumValFromRight(TreeNode root, TreeNode parent){
+//         if(root.left == null){
+//             if(root == parent.right){
+//                 parent.val = root.val;
+//                 parent.right = root.right;
+//                 return parent.val;
+//             }
+//             parent.left = root.right;
+//             return root.val;
+//         }
+//         return miminumValFromRight(root.left, root);
+//     }
     
 }
